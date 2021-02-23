@@ -157,44 +157,14 @@ renderPlotly({
 
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
-
-### Chart B
-
-```{r, echo = F}
-
-# nyc_airbnb %>% 
-#   mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
-#   plot_ly(y = ~price, color = ~neighbourhood, type = "box", colors = "viridis")
-```
-
-### Chart C
-
-```{r, echo = F}
-renderPlotly({
-  managers.melt[managers.melt$manager == input$asd, ] %>% 
-  add_histogram()
-    
-})        
-# nyc_airbnb %>% 
-#   count(neighbourhood) %>% 
-#   mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
-#   plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis")
-plot_ly(type='scattergeo',
-        lon =c( 42, 39 ),
-        lat =c( 12, 22 ),
-        text =c( 'Rome' , 'Greece' ),mode = 'markers')
-
-```
-
+### Chart D
 
 ```{r, echo = F}
 library(XML)
 library(leafletCN)
 # 读取网页的表格
 # Sorry for 爬了你家网站
-table = readHTMLTable("http://www.pm25.in/rank",  
+table = readHTMLTable("http://www.pm25.in/rank",
                       encoding = "UTF-8", stringsAsFactors = F)[[1]]
 
 # 整理数据并命名
@@ -207,4 +177,53 @@ dat$AQI = as.numeric(dat$AQI)
 geojsonMap(dat, "city",
            popup =  paste0(dat$city, ":", dat$AQI),
            palette = "Reds", legendTitle = "AQI")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r, echo = F}
+
+nyc_airbnb %>%
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>%
+  plot_ly(y = ~price, color = ~neighbourhood, type = "box", colors = "viridis")
+```
+
+### Chart C
+
+```{r, echo = F}
+renderPlotly({
+  # plotc = reactive({managers.melt[managers.melt$manager == input$asd, ] %>% 
+  #   group_by(manager) %>% 
+  #   count()
+  # })  
+  (ggplot(managers.melt[managers.melt$manager == input$asd, ] %>% 
+    group_by(manager) %>% 
+      count()) + 
+     aes(x = manager, y = n, color = manager, fill = manager) + 
+     geom_col()) %>% 
+    ggplotly()
+    # plot_ly(x = plotc$n, 
+    #         color = plotc$manager,
+    #     type = "histogram")
+})        
+# nyc_airbnb %>% 
+#   count(neighbourhood) %>% 
+#   mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
+#   plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis")
+
+# plot_ly(type='scattergeo',
+#         lon =c( 42, 39 ),
+#         lat =c( 12, 22 ),
+#         text =c( 'Rome' , 'Greece' ),mode = 'markers')
+plot3 = data.frame(filter(managers.melt, manager == "HAM1") %>% group_by(manager) %>% count())
+plot3
+plot_ly(x = plot3$n, 
+        type = "histogram")
+
+
+(ggplot(plot3) + aes(y = n) + geom_histogram()) %>% ggplotly()
+
 ```
