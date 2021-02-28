@@ -378,8 +378,8 @@ fig <- plot_ly(
   r = barroud$mean_price,
   theta = barroud$loc,
   color = barroud$mean_price,
-  # colors = colorRampPalette(brewer.pal(8, "Greens")(32)),
-    # brewer.pal(32,"Greens"),
+  colors = #colorRampPalette(brewer.pal(8, "Greens")(32)),
+  # brewer.pal(32,"Greens"),
   opacity = barroud$mean_price
   # mode = 'markers'
   
