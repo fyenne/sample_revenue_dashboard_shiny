@@ -43,3 +43,12 @@ vignettes/*.pdf
 *.json
 *.png
 *.rda
+
+
+
+*.dcf
+*.txt
+*.dbf
+*.prj
+*.shp
+*.shx
