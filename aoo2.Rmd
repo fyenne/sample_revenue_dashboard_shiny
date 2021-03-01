@@ -86,9 +86,9 @@ manager_names = manager_names$names_ %>% paste0()
 
 selectInput("asd", label = "Name of Manager :",
             choices = manager_names,
-            selected = manager_names,
+            selected = c(manager_names %>% as.list()),
             multiple = T)
-# 
+# manager_names
 # sliderInput("bw_adjust", label = "Bandwidth adjustment:",
 #             min = 0.1, max = 1, value = .1, step = 0.2)
 
@@ -203,23 +203,26 @@ renderPlotly({
             group_by = ~manager, 
             color = ~manager
             ) %>% 
-    add_lines()
+    add_lines() %>% 
+    layout(showlegend = F)
+           
 })
 ```
 
 Column {data-width=400}
 -----------------------------------------------------------------------
 
-### Chart C 
 
-```{r}
-# # 右上角
-# saved for map
-# library(nycmaps)
-# library(maps)
-# plot_nyc()
 
-```
+<!-- ```{r} -->
+<!-- ### Chart C  -->
+<!-- # # 右上角 -->
+<!-- # saved for map -->
+<!-- # library(nycmaps) -->
+<!-- # library(maps) -->
+<!-- # plot_nyc()  -->
+
+<!-- ``` -->
 
 ### Chart D 
 
@@ -257,7 +260,7 @@ Column {data-width=400}
 nyc_airbnb %>%
   count(neighbourhood) %>%
   mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>%
-  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis")
+  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis") %>% layout(showlegend = F)
 
 # plot_ly(type='scattergeo',
 #         lon =c( 42, 39 ),
@@ -342,7 +345,7 @@ nyc_airbnb %>%
   plot_ly(y = ~price, 
           color = ~neighbourhood,
           type = "box", 
-          colors = "viridis")
+          colors = "viridis") %>% layout(showlegend = F)
 ```
 
 
