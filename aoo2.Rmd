@@ -202,7 +202,7 @@ renderPlotly({
   managers.melt[managers.melt$manager == input$asd, ] %>% 
     # filter(manager == input$asd) %>%
     plot_ly(x = ~ date,y = ~val, 
-            group = ~manager, 
+            group_by = ~manager, 
             color = ~manager
             ) %>% 
     add_lines()
@@ -214,11 +214,12 @@ Column {data-width=400}
 
 ### Chart C 
 
-```{r, echo = F}
-# 右上角
-library(nycmaps)
-library(maps)
-plot_nyc()
+```{r}
+# # 右上角
+# save for map
+# library(nycmaps)
+# library(maps)
+# plot_nyc()
 
 ```
 
@@ -353,17 +354,17 @@ Column {data-height=800}
 ### Chart E 
 
 ```{r, echo = F, warning=F, message=F}
-library(RColorBrewer)
+# library(RColorBrewer)
 # nyc_airbnb %>%
 #   count(neighbourhood) %>%
 #   mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>%
 #   plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis")
 
 # 
-barroud = data.frame(neighbourhood = nyc_airbnb %>% group_by(neighbourhood) %>% 
-    summarise(mean(price)) %>% 
+barroud = data.frame(neighbourhood = nyc_airbnb %>% group_by(neighbourhood) %>%
+    summarise(mean(price)) %>%
     data.frame())
-
+# 
 names(barroud) = c("loc", "mean_price")
 ax <- list(
   title = "",
@@ -373,20 +374,20 @@ ax <- list(
   showgrid = FALSE
 )
 fig <- plot_ly(
-  data = barroud, 
+  data = barroud,
   type = 'barpolar',
   r = barroud$mean_price,
   theta = barroud$loc,
-  color = barroud$mean_price,
-  colors = #colorRampPalette(brewer.pal(8, "Greens")(32)),
+  color = barroud$mean_price
+  # colors = #colorRampPalette(brewer.pal(8, "Greens")(32)),
   # brewer.pal(32,"Greens"),
-  opacity = barroud$mean_price
+  # opacity = barroud$mean_price
   # mode = 'markers'
-  
+
 )
-# fig <- fig %>% add_trace(marker="line"
-#  
-# )
+# # fig <- fig %>% add_trace(marker="line"
+# #  
+# # )
 fig <- fig %>% layout(xaxis = ax, yaxis = ax)
 fig
 
