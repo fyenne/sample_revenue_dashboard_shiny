@@ -28,8 +28,7 @@ library(shinydashboardPlus)
 library(bs4Dash)
 ```
 
-Page 1 {data-orientation=columns}
-=====================================     
+
 
 ```{r, include=F}
 load("./nyc_airbnb.rda")
@@ -74,7 +73,10 @@ managers.melt[,"date"] <- format(managers.melt[,"date"],format = "%Y-%m-%d")
 # 
 # ggplotly(box_ggplot)
 ```
- 
+
+Page 1
+=====================================     
+
 Inputs {.sidebar}
 -------------------------------------
 
@@ -86,16 +88,16 @@ selectInput("asd", label = "Name of Manager :",
             choices = manager_names,
             selected = manager_names,
             multiple = T)
-
-sliderInput("bw_adjust", label = "Bandwidth adjustment:",
-            min = 0.1, max = 1, value = .1, step = 0.2)
+# 
+# sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+#             min = 0.1, max = 1, value = .1, step = 0.2)
 
 # manager_names
 ```
 
 
 Column {data-width=600, data-height = 500}
------------------------------------------------------------------------
+-------------------------------------
 
 ### Chart A
 
@@ -193,11 +195,7 @@ renderPlotly({
 # geojsonMap(dat, "city",
 #            popup =  paste0(dat$city, ":", dat$AQI),
 #            palette = "Reds", legendTitle = "AQI")
-```
-
-```{r, echo = F}
-
-
+ 
 renderPlotly({
   managers.melt[managers.melt$manager == input$asd, ] %>% 
     # filter(manager == input$asd) %>%
@@ -216,14 +214,16 @@ Column {data-width=400}
 
 ```{r}
 # # 右上角
-# save for map
+# saved for map
 # library(nycmaps)
 # library(maps)
 # plot_nyc()
 
 ```
 
-### Chart D {.tabset .tabset-fade}
+### Chart D 
+
+<!--  {.tabset .tabset-fade} -->
 
 ```{r, echo = F}
 # renderPlotly({
@@ -320,7 +320,7 @@ nyc_airbnb %>%
         # m1
 ```
 
-### Chart F
+### Chart E
 
 ```{r, echo = F}
 # wi = map_data("county", "New york")
@@ -346,12 +346,12 @@ nyc_airbnb %>%
 ```
 
 
-Page 2
+Page 2 
 =====================================     
 
 Column {data-height=800}
 -----------------------------------------------------------------------
-### Chart E 
+### Chart F 
 
 ```{r, echo = F, warning=F, message=F}
 # library(RColorBrewer)
@@ -366,6 +366,7 @@ barroud = data.frame(neighbourhood = nyc_airbnb %>% group_by(neighbourhood) %>%
     data.frame())
 # 
 names(barroud) = c("loc", "mean_price")
+
 ax <- list(
   title = "",
   zeroline = FALSE,
