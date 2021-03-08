@@ -5,9 +5,8 @@ account: fyenneyenn
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3697447
-bundleId: 4282102
+bundleId: 4284664
 url: https://fyenneyenn.shinyapps.io/aoo2/
-when: 1614527553.3283
+when: 1614586716.74938
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: nyc_airbnb.rda
